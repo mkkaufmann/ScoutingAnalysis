@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import statistics
 import numpy as np
 
 f = open("file.csv", "r")
