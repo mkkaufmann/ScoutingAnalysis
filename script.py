@@ -101,9 +101,11 @@ def getAverageBetweenMatches(teams, team, datapoint):
     return total/amount
 
 metrics = ["Bottom Port Auto", "Outer Port Auto", "Inner Port Auto", "PC Pickup Auto", "Bottom Port Tele", "Outer Port Tele", "Inner Port Tele", "Rotation Control", "Position Control", "Bottom Port Endgame", "Outer Port Endgame", "Inner Port Endgame", "Overall Score", "Ball Score", "Climb Score", "Total Balls", "Control Score"]
-print("data on a specific team? y/n")
-specific = input()
-if specific == "y":
+print("1 | data on a specific team")
+print("2 | single metric across all teams")
+print("3 | compare multiple teams")
+graphType = input()
+if graphType == "1":
     # get all data for a single team
     print("team?")
     team = int(input())
@@ -119,7 +121,7 @@ if specific == "y":
     plt.xticks(ind, labels, fontsize=7, rotation=30)
     plt.title(team)
     plt.show()
-else:
+elif graphType == "2":
     #get single metric for all teams
     labels = list(teams.keys())
     
@@ -154,4 +156,28 @@ else:
     plt.ylabel('Value', fontsize=7)
     plt.xticks(ind, labels, fontsize=7, rotation=30)
     plt.title(datapoint)
+    plt.show()
+elif graphType == "3":
+    selected = []
+    team = ""
+    print("Enter teams and then enter q when done")
+    while True:
+        team = input()
+        if(team == "q"):
+            break
+        selected.append(int(team))
+    print(selected)
+    labels = ["Bottom Port Auto","Outer Port Auto","Inner Port Auto","PC Pickup Auto","Bottom Port Tele","Outer Port Tele","Inner Port Tele","Rotation Control","Position Control","Bottom Port Endgame","Outer Port Endgame","Inner Port Endgame","Endgame Outcome","Defense Second", "Overall Score", "Ball Score", "Climb Score", "Total Balls"]
+    # graph
+    ind = np.arange(len(labels))
+    width = 0.85/len(selected)
+    for i in range(len(selected)):
+        values = []
+        for label in labels:
+            values.append(getAverageBetweenMatches(teams, selected[i], label))
+        plt.bar(ind + (i-0.5)*width, values, width, label=selected[i])
+    plt.xlabel('Category', fontsize=7)
+    plt.ylabel('Value', fontsize=7)
+    plt.xticks(ind, labels, fontsize=7, rotation=30)
+    plt.legend()
     plt.show()
