@@ -83,7 +83,7 @@ if f.mode == 'r':
                 increase = int(value)*weights[j]
                 score+=int(value)*weights[j]
                 ballScore+=int(value)*weights[j]
-                totalBalls+=1
+                totalBalls+=int(value)
         #populate some general statistics from the match
         teams[team][matchtag]["Overall Score"] = score
         teams[team][matchtag]["Ball Score"] = ballScore
