@@ -116,7 +116,7 @@ if graphType == "1":
     for label in labels:
         values.append(getAverageBetweenMatches(teams, team, label))
     # get indices for a sort by values
-    sortedListIndices = np.argsort(values);
+    sortedListIndices = np.flip(np.argsort(values))
     sortedlabels = []
     sortedvalues = []
     # make sorted labels and values
@@ -159,10 +159,16 @@ elif graphType == "2":
     values = []
     for team in labels:
         values.append(getAverageBetweenMatches(teams, team, datapoint))
-    plt.bar(ind, values)
+    sortedindices = np.argsort(values)
+    sortedlabels=[]
+    sortedvalues=[]
+    for i in range(len(sortedindices)):
+        sortedlabels.append(labels[sortedindices[i]])
+        sortedvalues.append(values[sortedindices[i]])
+    plt.bar(ind, sortedvalues)
     plt.xlabel('Team', fontsize=7)
     plt.ylabel('Value', fontsize=7)
-    plt.xticks(ind, labels, fontsize=7, rotation=30)
+    plt.xticks(ind, sortedlabels, fontsize=7, rotation=30)
     plt.title(datapoint)
     plt.show()
 elif graphType == "3":
